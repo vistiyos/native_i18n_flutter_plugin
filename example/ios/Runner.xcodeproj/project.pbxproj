@@ -44,6 +44,9 @@
 		3B80C3931E831B6300D905FE /* App.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = App.framework; path = Flutter/App.framework; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		7617BD46230CA74000F85D9C /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = fr; path = fr.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7617BD47230CA74000F85D9C /* fr */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = fr; path = fr.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7617BD48230CA74000F85D9C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7637BF0B23074CB60062D9F4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		76AB3ADF2306C1B500A69229 /* ios */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ios; path = ../../ios; sourceTree = "<group>"; };
 		76D958992307512800AA11EE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -201,6 +204,7 @@
 			knownRegions = (
 				en,
 				es,
+				fr,
 			);
 			mainGroup = 97C146E51CF9000F007C117D;
 			productRefGroup = 97C146EF1CF9000F007C117D /* Products */;
@@ -313,6 +317,7 @@
 			children = (
 				7637BF0B23074CB60062D9F4 /* en */,
 				76D958992307512800AA11EE /* es */,
+				7617BD48230CA74000F85D9C /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -322,6 +327,7 @@
 			children = (
 				76D9589B2307540900AA11EE /* en */,
 				76D958A02307541F00AA11EE /* es */,
+				7617BD47230CA74000F85D9C /* fr */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -331,6 +337,7 @@
 			children = (
 				76D9589D2307540900AA11EE /* en */,
 				76D958A12307541F00AA11EE /* es */,
+				7617BD46230CA74000F85D9C /* fr */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

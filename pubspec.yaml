@@ -1,8 +1,8 @@
 name: native_i18n_flutter_plugin
-description: A new flutter plugin project.
+description: Internationalization plugin based on Native APIs
 version: 0.0.1
-author:
-homepage:
+author: Victor Escobar <victorescobargonza@gmail.com>
+homepage: https://github.com/vistiyos/native_i18n_flutter_plugin
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -11,6 +11,8 @@ dependencies:
   path: ^1.6.0
   args: ^1.5.2
   xml: ^3.5.0
+  build: ^1.1.4
+  build_config: ^0.4.0
   flutter:
     sdk: flutter
 

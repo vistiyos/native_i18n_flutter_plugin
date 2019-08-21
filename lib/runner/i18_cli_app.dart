@@ -5,10 +5,11 @@ import 'package:args/args.dart';
 import 'package:native_i18n_flutter_plugin/runner/generators/base_generator.dart';
 import 'package:native_i18n_flutter_plugin/runner/generators/i18n_generator.dart';
 import 'package:native_i18n_flutter_plugin/runner/generators/language_file_generator.dart';
+import 'package:native_i18n_flutter_plugin/runner/generators/language_string_class_generator.dart';
 import 'package:native_i18n_flutter_plugin/runner/generators/native_files_generator.dart';
 
 class I18nCliApp {
-  final List<String> _availableCommands = ['generateLangFiles', 'generateI18n'];
+  final List<String> _availableCommands = ['generateLangFiles', 'generateI18n', 'generateClass'];
 
   void process(List<String> args) {
     var argParser = _createArgParser();
@@ -35,6 +36,16 @@ class I18nCliApp {
           if (!options.wasParsed('input')) throw ArgumentError('input argument is required');
           Map<String, dynamic> configuration = _readConfiguration(options['input']);
           i18Generator = NativeFilesGenerator(configuration['defaultLocale'], Directory(options['input']));
+          break;
+        case 'generateClass':
+          if (!options.wasParsed('input')) throw ArgumentError('input argument is required');
+          if (!options.wasParsed('output')) throw ArgumentError('output argument is required');
+          Map<String, dynamic> configuration = _readConfiguration(options['input']);
+          i18Generator = LanguageStringClassGenerator(
+            Directory(options['input']),
+            Directory(options['output']),
+            configuration['defaultLocale'],
+          );
           break;
       }
     }

@@ -8,25 +8,19 @@ This plugin provides:
 
 ## Getting Started
 
-### Enable CLI
-
-In order to use the provided cli tool, you need to enable first, therefore, run the following command:
-
-`flutter pub global activate native_i18n`
-
 ### Generate Flutter language files
 
 You can either generate the files manually following the naming convention `strings_<locale>.json` where locale 
 is the [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) language code or execute the following command:
 
-`flutter pub global run native_i18n generateLangFiles -o <folder_for_language_files>`
+`flutter pub run native_i18n_flutter_plugin generateLangFiles -o <folder_for_language_files>`
 
 ### Generate native language files
 
 In order to have it ready, you need to generate the language files for each platform, 
 therefore, you need to run the following command:
 
-`flutter pub global run native_i18n generateNative -i <folder_for_flutter_language_files>`
+`flutter pub run native_i18n_flutter_plugin generateNative -i <folder_for_flutter_language_files>`à
 
 The command above will generate the necessary files for each platform (check Supported Platforms) although there are extra steps you
 need to follow you can use it.
@@ -47,8 +41,16 @@ do the following:
 3. Inside of the Runner folder, there are one folder per language with the following format `<locale>.lproj` so you need 
 to add each file inside of that folder so when Flutter builds your app, those file will be included as well.
 
+### Generate Dart class with keys as static properties
+
+Sometimes is hard to remember all the keys, so what if the IDE you are using to create your app can remind you those keys. That's what
+this command is for, so just run the following command and enjoy the magic:
+
+`flutter pub run native_i18n_flutter_plugin generateClass -i <folder_for_flutter_language_files> -o <location_for_your_class>`
+
+
 ## TODO
 
-1. Generate classes for each languages so can be used with IDE autocompletion.
+1. Generate class containing the language strings keys so can be used with IDE autocompletion. ✅
 2. Formatted strings.
 3. Strings pluralization.  

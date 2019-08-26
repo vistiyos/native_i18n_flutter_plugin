@@ -18,7 +18,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: I18nText(I18n.test),
+          child: I18nText(I18n.test('Paco')),
         ),
       ),
     );

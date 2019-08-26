@@ -2,10 +2,16 @@ PODS:
   - Flutter (1.0.0)
   - native_i18n_flutter_plugin (0.0.1):
     - Flutter
+    - ObjectMapper (~> 3.4)
+  - ObjectMapper (3.5.1)
 
 DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
   - native_i18n_flutter_plugin (from `.symlinks/plugins/native_i18n_flutter_plugin/ios`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - ObjectMapper
 
 EXTERNAL SOURCES:
   Flutter:
@@ -15,7 +21,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
-  native_i18n_flutter_plugin: 41f75dffed9b739845a7b66aea0214d99f8e3d8e
+  native_i18n_flutter_plugin: 7366979979539ec4fde51ad935a9376cefad3409
+  ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
 
 PODFILE CHECKSUM: b6a0a141693093b304368d08511b46cf3d1d0ac5
 

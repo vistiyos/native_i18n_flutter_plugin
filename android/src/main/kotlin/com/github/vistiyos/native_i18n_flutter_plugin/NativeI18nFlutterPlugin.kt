@@ -1,6 +1,8 @@
 package com.github.vistiyos.native_i18n_flutter_plugin
 
 import android.content.Context
+import com.fasterxml.jackson.module.kotlin.*
+import com.github.vistiyos.native_i18n_flutter_plugin.model.Translation
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -16,15 +18,17 @@ class NativeI18nFlutterPlugin(private var context: Context) : MethodCallHandler 
         }
     }
 
+    var objectMapper = jacksonObjectMapper()
+
     override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
             "getTranslations" -> {
                 val translationMap = mutableMapOf<String, String>()
-                call.argument<List<String>>("translationKeys")
-                        ?.stream()
-                        ?.map { translationKey -> Pair<String, Int>(translationKey, getInternalStringIdentifier(translationKey)) }
-                        ?.map { pair -> Pair<String, String>(pair.first, getString(pair.second, pair.first)) }
-                        ?.forEach { pair -> translationMap[pair.first] = pair.second }
+                val translations: List<Translation> = objectMapper.readValue(call.arguments() as String)
+                translations
+                        .map { Pair(getInternalStringIdentifier(it.translationKey), it) }
+                        .map { Pair(it.second.translationKey, getString(it.first, it.second)) }
+                        .forEach { translationMap[it.first] = it.second }
 
                 when (translationMap.size) {
                     0 -> result.error("Translations not found", null, null)
@@ -38,9 +42,9 @@ class NativeI18nFlutterPlugin(private var context: Context) : MethodCallHandler 
     private fun getInternalStringIdentifier(stringIdentifier: String) =
             context.resources.getIdentifier(stringIdentifier, "string", context.packageName)
 
-    private fun getString(internalStringIdentifier: Int, stringIdentifier: String) =
+    private fun getString(internalStringIdentifier: Int, translation: Translation) =
             when (internalStringIdentifier) {
-                0 -> stringIdentifier
+                0 -> translation.translationKey
                 else -> context.getString(internalStringIdentifier)
             }
 }

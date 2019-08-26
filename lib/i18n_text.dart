@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:native_i18n_flutter_plugin/native_i18n_flutter_plugin.dart';
+import 'package:native_i18n_flutter_plugin/translation.dart';
 
 /// Widget that shows an internationalized text
 class I18nText extends StatelessWidget {
   /// Translation key
-  final String _translationKey;
+  final Translation _translation;
 
   /// Other [Text] widget properties.
   final TextStyle style;
@@ -20,7 +21,7 @@ class I18nText extends StatelessWidget {
   final TextWidthBasis textWidthBasis;
 
   I18nText(
-    this._translationKey, {
+    this._translation, {
     key,
     this.style,
     this.strutStyle,
@@ -58,6 +59,6 @@ class I18nText extends StatelessWidget {
 
           return Container();
         },
-        future: NativeI18nFlutterPlugin.getTranslation(_translationKey),
+        future: NativeI18nFlutterPlugin.getTranslation(_translation),
       );
 }

@@ -1,5 +1,6 @@
 import Flutter
 import UIKit
+import ObjectMapper
 
 public class SwiftI18nPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
@@ -10,16 +11,14 @@ public class SwiftI18nPlugin: NSObject, FlutterPlugin {
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     if call.method == "getTranslations" {
-        let arguments:NSDictionary = call.arguments as! NSDictionary
-        let translationKeys:NSArray = arguments.value(forKey: "translationKeys") as! NSArray
-        var translations : [String: String] = [:]
-        
-        translationKeys.forEach { translationKey in
-            let translationKeyString = translationKey as! String
-            translations[translationKeyString] = NSLocalizedString(translationKeyString, comment: "")
+        let translations:[Translation] = Mapper<Translation>().mapArray(JSONString: call.arguments as! String) ?? []
+        var translationsMap : [String: String] = [:]
+    
+        translations.forEach { translation in
+            translationsMap[translation.translationKey] = NSLocalizedString(translation.translationKey, comment: "")
         }
         
-        result(translations)
+        result(translationsMap)
         return
     } else {
         result(FlutterMethodNotImplemented)

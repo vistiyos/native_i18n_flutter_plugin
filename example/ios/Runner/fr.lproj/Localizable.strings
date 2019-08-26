@@ -1,1 +1,1 @@
-"test" = "ceci est un test";
+"test" = "ceci est un test, %s";

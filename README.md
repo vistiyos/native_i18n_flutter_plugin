@@ -52,5 +52,5 @@ this command is for, so just run the following command and enjoy the magic:
 ## TODO
 
 1. Generate class containing the language strings keys so can be used with IDE autocompletion. ✅
-2. Formatted strings.
+2. Formatted strings. ✅
 3. Strings pluralization.  

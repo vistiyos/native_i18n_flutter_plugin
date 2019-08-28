@@ -50,7 +50,7 @@ class I18nCliApp {
       }
     }
 
-    i18Generator.generate();
+    i18Generator.generate(options.wasParsed('watch'));
   }
 
   Map<String, dynamic> _readConfiguration(String inputDirectory) =>
@@ -58,5 +58,6 @@ class I18nCliApp {
 
   ArgParser _createArgParser() => ArgParser() //
     ..addOption('input', abbr: 'i', help: 'Input directory to read from')
-    ..addOption('output', abbr: 'o', help: 'Output directory');
+    ..addOption('output', abbr: 'o', help: 'Output directory')
+    ..addFlag('watch', abbr: 'w');
 }

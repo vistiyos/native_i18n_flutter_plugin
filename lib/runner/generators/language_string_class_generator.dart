@@ -2,38 +2,55 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:native_i18n_flutter_plugin/runner/generators/i18n_generator.dart';
+import 'package:watcher/watcher.dart';
 
 /// Generate Dart class with the
 class LanguageStringClassGenerator extends I18nGenerator {
   final Directory _inputDirectory;
   final String _defaultLocale;
   final Directory _outputDirectory;
-  final List<_LanguageStringGetter> strings = [];
 
   LanguageStringClassGenerator(this._inputDirectory, this._outputDirectory, this._defaultLocale);
 
   @override
-  void generate() {
-    _getLanguageStrings().forEach((key, value) => strings.add(_LanguageStringGetter(key, value)));
+  void generate(bool watch) {
+    _generateClassFile();
+
+    if (watch) {
+      FileWatcher(_getDefaultLanguageFile.absolute.path) //
+          .events
+          .listen((event) {
+        if (event.type == ChangeType.MODIFY) _generateClassFile();
+      });
+    }
+  }
+
+  void _generateClassFile() {
+    List<_LanguageStringGetter> strings = [];
+
+    out("Generating class file...");
+
+    _getLanguageStrings.forEach((key, value) => strings.add(_LanguageStringGetter(key, value)));
 
     final classTemplate = """
-  /// DO NOT MODIFY, MANUALLY CHANGES WILL BE OVERWRITTEN
-  import 'package:native_i18n_flutter_plugin/translation.dart';
+      /// DO NOT MODIFY, MANUALLY CHANGES WILL BE OVERWRITTEN
+      import 'package:native_i18n_flutter_plugin/translation.dart';
   
-  /// Internationalized strings keys
-  class I18n {
-    ${strings.map((f) => f.toString()).join("\n")}
-  }
-  """;
+      /// Internationalized strings keys
+      class I18n {
+        ${strings.map((f) => f.toString()).join("\n")}
+      }
+    """;
 
     File("${_outputDirectory.path}/i18n.dart") //
         .writeAsString(classTemplate)
         .then((file) => Process.run('dartfmt', [file.absolute.path]) //
-            .then((result) => file.writeAsString(result.stdout)));
+            .then((result) => file.writeAsString(result.stdout).then((_) => out("Class file generated."))));
   }
 
-  Map<String, dynamic> _getLanguageStrings() =>
-      jsonDecode(File("${_inputDirectory.path}/strings_$_defaultLocale.json").readAsStringSync());
+  File get _getDefaultLanguageFile => File("${_inputDirectory.path}/strings_$_defaultLocale.json");
+
+  Map<String, dynamic> get _getLanguageStrings => jsonDecode(_getDefaultLanguageFile.readAsStringSync());
 }
 
 /// Language String IDE Getter

@@ -12,6 +12,7 @@ dependencies:
   args: ^1.5.2
   xml: ^3.5.0
   sprintf: ^4.0.2
+  watcher: ^0.9.7+12
   flutter:
     sdk: flutter
 

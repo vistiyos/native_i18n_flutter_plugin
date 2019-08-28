@@ -6,6 +6,7 @@ import 'package:native_i18n_flutter_plugin/runner/generators/i18n_generator.dart
 import 'package:native_i18n_flutter_plugin/runner/helpers/language_file.dart';
 import 'package:native_i18n_flutter_plugin/runner/helpers/language_string.dart';
 import 'package:native_i18n_flutter_plugin/runner/helpers/language_string_map.dart';
+import 'package:watcher/watcher.dart';
 import 'package:xml/xml.dart' as xml;
 
 /// Native language files generator
@@ -16,13 +17,28 @@ class NativeFilesGenerator extends I18nGenerator {
 
   NativeFilesGenerator(this._defaultLocale, this._inputDirectory);
 
-  void generate() async {
-    _getLanguageFiles().then((languageFiles) {
+  void generate(bool watch) async {
+    _generateNativeFiles();
+
+    if (watch) {
+      _getLanguageFiles
+          .then((files) => files.forEach((file) => FileWatcher(file.file.path).events.listen(_languageFileWatcher)));
+    }
+  }
+
+  void _languageFileWatcher(WatchEvent event) {
+    if (event.type == ChangeType.MODIFY) _generateNativeFiles();
+  }
+
+  void _generateNativeFiles() {
+    out("Generating native language files");
+    _getLanguageFiles.then((languageFiles) {
       var locales = _getAllLocales(languageFiles);
       var languageStrings = _getLanguageStrings(languageFiles);
 
       _generateAndroidFiles(locales, languageStrings);
       _generateIosAndroidFiles(locales, languageStrings);
+      out("Native language files generated");
     });
   }
 
@@ -109,7 +125,7 @@ class NativeFilesGenerator extends I18nGenerator {
           .join('\n');
 
   /// Get a list of [LanguageFile]s from given input folder.
-  Future<List<LanguageFile>> _getLanguageFiles() {
+  Future<List<LanguageFile>> get _getLanguageFiles {
     List<LanguageFile> languageFiles = [];
     var languageFilesFuture = Completer<List<LanguageFile>>();
 

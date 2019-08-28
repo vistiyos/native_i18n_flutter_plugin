@@ -25,6 +25,3 @@ flutter:
   plugin:
     androidPackage: com.github.vistiyos.native_i18n_flutter_plugin
     pluginClass: NativeI18nFlutterPlugin
-
-executables:
-  i18_gen: i18_gen

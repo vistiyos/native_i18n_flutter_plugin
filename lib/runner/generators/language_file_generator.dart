@@ -31,7 +31,7 @@ class LanguageFileGenerator extends I18nGenerator {
   // @formatter:on
 
   @override
-  void generate() {
+  void generate(_) {
     bool finished = false;
     List<String> locales = [];
 

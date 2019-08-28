@@ -20,7 +20,7 @@ is the [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) langua
 In order to have it ready, you need to generate the language files for each platform, 
 therefore, you need to run the following command:
 
-`flutter pub run native_i18n_flutter_plugin generateNative -i <folder_for_flutter_language_files>`à
+`flutter pub run native_i18n_flutter_plugin generateNative -i <folder_for_flutter_language_files> [--watch]`
 
 The command above will generate the necessary files for each platform (check Supported Platforms) although there are extra steps you
 need to follow you can use it.
@@ -46,11 +46,12 @@ to add each file inside of that folder so when Flutter builds your app, those fi
 Sometimes is hard to remember all the keys, so what if the IDE you are using to create your app can remind you those keys. That's what
 this command is for, so just run the following command and enjoy the magic:
 
-`flutter pub run native_i18n_flutter_plugin generateClass -i <folder_for_flutter_language_files> -o <location_for_your_class>`
+`flutter pub run native_i18n_flutter_plugin generateClass -i <folder_for_flutter_language_files> -o <location_for_your_class> [--watch]`
 
 
 ## TODO
 
 1. Generate class containing the language strings keys so can be used with IDE autocompletion. ✅
 2. Formatted strings. ✅
-3. Strings pluralization.  
+3. Added watch flag so the command line will run whenever a file is change. ✅ 
+4. Strings pluralization.  

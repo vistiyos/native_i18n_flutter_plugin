@@ -6,7 +6,8 @@ class LanguageStringMap {
 
   void addLanguageStrings(String locale, Map<String, dynamic> languageStrings) {
     List<LanguageString> languageStringList = [];
-    languageStrings.forEach((key, value) => languageStringList.add(LanguageString(key, value)));
+    languageStrings.forEach(
+        (key, value) => languageStringList.add(LanguageString(key, value)));
     _languageStrings[locale] = languageStringList;
   }
 

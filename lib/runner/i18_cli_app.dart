@@ -9,7 +9,11 @@ import 'package:native_i18n_flutter_plugin/runner/generators/language_string_cla
 import 'package:native_i18n_flutter_plugin/runner/generators/native_files_generator.dart';
 
 class I18nCliApp {
-  final List<String> _availableCommands = ['generateLangFiles', 'generateI18n', 'generateClass'];
+  final List<String> _availableCommands = [
+    'generateLangFiles',
+    'generateI18n',
+    'generateClass'
+  ];
 
   void process(List<String> args) {
     var argParser = _createArgParser();
@@ -29,18 +33,25 @@ class I18nCliApp {
     } else {
       switch (options.rest[0]) {
         case 'generateLangFiles':
-          if (!options.wasParsed('output')) throw ArgumentError('output argument is required');
+          if (!options.wasParsed('output'))
+            throw ArgumentError('output argument is required');
           i18Generator = LanguageFileGenerator(Directory(options['output']));
           break;
         case 'generateI18n':
-          if (!options.wasParsed('input')) throw ArgumentError('input argument is required');
-          Map<String, dynamic> configuration = _readConfiguration(options['input']);
-          i18Generator = NativeFilesGenerator(configuration['defaultLocale'], Directory(options['input']));
+          if (!options.wasParsed('input'))
+            throw ArgumentError('input argument is required');
+          Map<String, dynamic> configuration =
+              _readConfiguration(options['input']);
+          i18Generator = NativeFilesGenerator(
+              configuration['defaultLocale'], Directory(options['input']));
           break;
         case 'generateClass':
-          if (!options.wasParsed('input')) throw ArgumentError('input argument is required');
-          if (!options.wasParsed('output')) throw ArgumentError('output argument is required');
-          Map<String, dynamic> configuration = _readConfiguration(options['input']);
+          if (!options.wasParsed('input'))
+            throw ArgumentError('input argument is required');
+          if (!options.wasParsed('output'))
+            throw ArgumentError('output argument is required');
+          Map<String, dynamic> configuration =
+              _readConfiguration(options['input']);
           i18Generator = LanguageStringClassGenerator(
             Directory(options['input']),
             Directory(options['output']),
@@ -54,7 +65,8 @@ class I18nCliApp {
   }
 
   Map<String, dynamic> _readConfiguration(String inputDirectory) =>
-      jsonDecode(File("${Directory(inputDirectory).path}/.i18n-config").readAsStringSync());
+      jsonDecode(File("${Directory(inputDirectory).path}/.i18n-config")
+          .readAsStringSync());
 
   ArgParser _createArgParser() => ArgParser() //
     ..addOption('input', abbr: 'i', help: 'Input directory to read from')

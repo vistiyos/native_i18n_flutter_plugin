@@ -10,7 +10,8 @@ class LanguageStringClassGenerator extends I18nGenerator {
   final String _defaultLocale;
   final Directory _outputDirectory;
 
-  LanguageStringClassGenerator(this._inputDirectory, this._outputDirectory, this._defaultLocale);
+  LanguageStringClassGenerator(
+      this._inputDirectory, this._outputDirectory, this._defaultLocale);
 
   @override
   void generate(bool watch) {
@@ -30,7 +31,8 @@ class LanguageStringClassGenerator extends I18nGenerator {
 
     out("Generating class file...");
 
-    _getLanguageStrings.forEach((key, value) => strings.add(_LanguageStringGetter(key, value)));
+    _getLanguageStrings.forEach(
+        (key, value) => strings.add(_LanguageStringGetter(key, value)));
 
     final classTemplate = """
       /// DO NOT MODIFY, MANUALLY CHANGES WILL BE OVERWRITTEN
@@ -45,12 +47,16 @@ class LanguageStringClassGenerator extends I18nGenerator {
     File("${_outputDirectory.path}/i18n.dart") //
         .writeAsString(classTemplate)
         .then((file) => Process.run('dartfmt', [file.absolute.path]) //
-            .then((result) => file.writeAsString(result.stdout).then((_) => out("Class file generated."))));
+            .then((result) => file
+                .writeAsString(result.stdout)
+                .then((_) => out("Class file generated."))));
   }
 
-  File get _getDefaultLanguageFile => File("${_inputDirectory.path}/strings_$_defaultLocale.json");
+  File get _getDefaultLanguageFile =>
+      File("${_inputDirectory.path}/strings_$_defaultLocale.json");
 
-  Map<String, dynamic> get _getLanguageStrings => jsonDecode(_getDefaultLanguageFile.readAsStringSync());
+  Map<String, dynamic> get _getLanguageStrings =>
+      jsonDecode(_getDefaultLanguageFile.readAsStringSync());
 }
 
 /// Language String IDE Getter
@@ -69,12 +75,17 @@ class _LanguageStringGetter {
   String get _keyToCamelCase {
     var keyParts = _key.split("_");
 
-    return keyParts[0] + keyParts.sublist(1).map((item) => item[0].toUpperCase() + item.substring(1)).join();
+    return keyParts[0] +
+        keyParts
+            .sublist(1)
+            .map((item) => item[0].toUpperCase() + item.substring(1))
+            .join();
   }
 
   bool get _valueContainsFormatString => _formatRegexp.hasMatch(_value);
 
   int get _arguments => _formatRegexp.allMatches(_value).length;
 
-  String get _argumentList => List.generate(_arguments, (i) => "arg$i").join(", ");
+  String get _argumentList =>
+      List.generate(_arguments, (i) => "arg$i").join(", ");
 }

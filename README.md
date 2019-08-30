@@ -13,7 +13,13 @@ This plugin provides:
 You can either generate the files manually following the naming convention `strings_<locale>.json` where locale 
 is the [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) language code or execute the following command:
 
-`flutter pub run native_i18n_flutter_plugin generateLangFiles -o <folder_for_language_files>`
+`flutter pub run native_i18n_flutter_plugin generateLangFiles -o <folder_for_language_files> -i <language_code_comma_separated`
+
+The first language specified will be set to be the default.
+
+#### Example
+
+`flutter pub run native_i18n_flutter_plugin generateLangFiles -o lang -i en,es,de`
 
 ### Generate native language files
 

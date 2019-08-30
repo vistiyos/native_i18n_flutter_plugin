@@ -6,8 +6,9 @@ import 'i18n_generator.dart';
 /// Flutter language files generator
 class LanguageFileGenerator extends I18nGenerator {
   final Directory _outputDirectory;
+  final List<String> _locales;
 
-  LanguageFileGenerator(this._outputDirectory);
+  LanguageFileGenerator(this._outputDirectory, this._locales);
 
   // @formatter:off
   final List<String> _supportedLocale = [
@@ -200,39 +201,12 @@ class LanguageFileGenerator extends I18nGenerator {
 
   @override
   void generate(_) {
-    bool finished = false;
     List<String> locales = [];
 
-    while (!finished) {
-      out('Type ISO 639-1 language code (https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) or quit to finish:');
-      String locale = stdin.readLineSync();
-      if (locale == 'quit') {
-        finished = true;
-      } else {
-        if (!_supportedLocale.contains(locale)) {
-          out('Locale not supported, check that is on the list located on https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes');
-        } else {
-          locales.add(locale);
-        }
-      }
-    }
-
-    bool validIndex = false;
-    Map<String, String> configuration = {};
-
-    while (!validIndex) {
-      out('Select the default language from the following list:');
-      for (var i = 0; i < locales.length; i++) {
-        out("${i + 1}. ${locales[i]}");
-      }
-      outSingle("Default language: ");
-      var index = int.parse(stdin.readLineSync());
-
-      if (index <= locales.length) {
-        configuration['defaultLocale'] = locales[index - 1];
-        validIndex = true;
-      }
-    }
+    _locales.forEach((locale) =>
+    _supportedLocale.contains(locale) ? locales.add(locale) : out(
+        "$locale Locale not supported, check that is on the list located on https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes"));
+    Map<String, String> configuration = {'defaultLocale': locales[0]};
 
     _outputDirectory.exists().then((exists) {
       if (!exists) _outputDirectory.createSync(recursive: true);

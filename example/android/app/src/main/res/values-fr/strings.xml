@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
-  <string name="test">ceci est un test, %s</string>
+  <string name="test">Quel beau test, %s!</string>
 </resources>

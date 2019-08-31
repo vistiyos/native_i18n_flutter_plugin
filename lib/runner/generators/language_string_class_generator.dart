@@ -10,8 +10,7 @@ class LanguageStringClassGenerator extends I18nGenerator {
   final String _defaultLocale;
   final Directory _outputDirectory;
 
-  LanguageStringClassGenerator(
-      this._inputDirectory, this._outputDirectory, this._defaultLocale);
+  LanguageStringClassGenerator(this._inputDirectory, this._outputDirectory, this._defaultLocale);
 
   @override
   void generate(bool watch) {
@@ -31,8 +30,7 @@ class LanguageStringClassGenerator extends I18nGenerator {
 
     out("Generating class file...");
 
-    _getLanguageStrings.forEach(
-        (key, value) => strings.add(_LanguageStringGetter(key, value)));
+    _getLanguageStrings.forEach((key, value) => strings.add(_LanguageStringGetter(key, value)));
 
     final classTemplate = """
       /// DO NOT MODIFY, MANUALLY CHANGES WILL BE OVERWRITTEN
@@ -40,7 +38,13 @@ class LanguageStringClassGenerator extends I18nGenerator {
   
       /// Internationalized strings keys
       class I18n {
+        static final _TranslationKeys keys = _TranslationKeys();
+      
         ${strings.map((f) => f.toString()).join("\n")}
+      }
+      
+      class _TranslationKeys {
+        ${strings.map((f) => f.translationKey).join("\n")}
       }
     """;
 
@@ -81,6 +85,9 @@ class _LanguageStringGetter {
             .map((item) => item[0].toUpperCase() + item.substring(1))
             .join();
   }
+
+  String get translationKey =>
+      "String get $_keyToCamelCase => '$_key';";
 
   bool get _valueContainsFormatString => _formatRegexp.hasMatch(_value);
 

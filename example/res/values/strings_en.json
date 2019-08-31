@@ -1,1 +1,3 @@
-{}
+{
+  "test": "What a cool test, %s!"
+}

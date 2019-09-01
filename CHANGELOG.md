@@ -17,3 +17,7 @@ Use a widget builder instead of a predefined widget.
 ## 0.1.4
 
 Fix command line name for native files generation.
+
+## 0.1.5
+
+Fix bug due to have not change all the ocurrences for the native file generation command

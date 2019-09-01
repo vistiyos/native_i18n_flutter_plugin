@@ -9,7 +9,7 @@ import 'package:native_i18n_flutter_plugin/runner/generators/language_string_cla
 import 'package:native_i18n_flutter_plugin/runner/generators/native_files_generator.dart';
 
 class I18nCliApp {
-  final List<String> _availableCommands = ['generateLangFiles', 'generateI18n', 'generateClass'];
+  final List<String> _availableCommands = ['generateLangFiles', 'generateNative', 'generateClass'];
 
   void process(List<String> args) {
     var argParser = _createArgParser();

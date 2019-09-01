@@ -13,3 +13,7 @@ Change cli for generating language files as currently there is a bug on Flutter 
 ## 0.1.3
 
 Use a widget builder instead of a predefined widget.
+
+## 0.1.4
+
+Fix command line name for native files generation.

@@ -37,7 +37,7 @@ class I18nCliApp {
             options['input'].toString().split(',').map((i) => i.trim()).toList(),
           );
           break;
-        case 'generateI18n':
+        case 'generateNative':
           if (!options.wasParsed('input')) throw ArgumentError('input argument is required');
           Map<String, dynamic> configuration = _readConfiguration(options['input']);
           i18Generator = NativeFilesGenerator(configuration['defaultLocale'], Directory(options['input']));

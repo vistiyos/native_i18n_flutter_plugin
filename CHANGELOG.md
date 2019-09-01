@@ -20,4 +20,8 @@ Fix command line name for native files generation.
 
 ## 0.1.5
 
-Fix bug due to have not change all the ocurrences for the native file generation command
+Fix bug due to have not change all the occurrences for the native file generation command
+
+## 0.1.6
+
+Fix bug in command line with projects that haven't been set up yet. 

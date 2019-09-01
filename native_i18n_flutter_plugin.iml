@@ -17,7 +17,6 @@
       <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/native_i18n_flutter_plugin/example/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/native_i18n_flutter_plugin/example/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/native_i18n_flutter_plugin/example/build" />
-      <excludeFolder url="file://$MODULE_DIR$/example/ios/.symlinks/plugins/native_i18n_flutter_plugin/example/ios/Flutter/App.framework/flutter_assets/packages" />
       <excludeFolder url="file://$MODULE_DIR$/example/ios/Flutter/App.framework/flutter_assets/packages" />
       <excludeFolder url="file://$MODULE_DIR$/runner/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/runner/.pub" />

@@ -21,8 +21,8 @@ class NativeFilesGenerator extends I18nGenerator {
     _generateNativeFiles();
 
     if (watch) {
-      _getLanguageFiles.then((files) => files.forEach((file) =>
-          FileWatcher(file.file.path).events.listen(_languageFileWatcher)));
+      _getLanguageFiles
+          .then((files) => files.forEach((file) => FileWatcher(file.file.path).events.listen(_languageFileWatcher)));
     }
   }
 
@@ -37,16 +37,14 @@ class NativeFilesGenerator extends I18nGenerator {
       var languageStrings = _getLanguageStrings(languageFiles);
 
       _generateAndroidFiles(locales, languageStrings);
-      _generateIosAndroidFiles(locales, languageStrings);
+      _generateIosFiles(locales, languageStrings);
       out("Native language files generated");
     });
   }
 
   /// Generates all necessary files for Android
-  void _generateAndroidFiles(
-      List<String> locales, LanguageStringMap languageStrings) {
-    Directory resourceDirectory =
-        Directory("${Directory.current.path}/android/app/src/main/res");
+  void _generateAndroidFiles(List<String> locales, LanguageStringMap languageStrings) {
+    Directory resourceDirectory = Directory("${Directory.current.path}/android/app/src/main/res");
 
     _createLocaleFile(
       "${resourceDirectory.path}/values",
@@ -60,54 +58,50 @@ class NativeFilesGenerator extends I18nGenerator {
         ));
   }
 
-  void _generateIosAndroidFiles(
-      List<String> locales, LanguageStringMap languageStrings) {
-    Directory runnerRepository =
-        Directory("${Directory.current.path}/ios/Runner");
+  void _generateIosFiles(List<String> locales, LanguageStringMap languageStrings) {
+    Directory runnerRepository = Directory("${Directory.current.path}/ios/Runner");
     List<String> incompleteLocales = [];
 
-    var completeLocale = locales //
-        .where((element) =>
-            _hasAllFiles(Directory("${runnerRepository.path}/$element.lproj")))
-        .first;
+    // it means that there's no file yet, let's take them from Base.lproj
+    if (_getCompleteLocaleIterable(locales, runnerRepository).isEmpty)
+      _copyFiles(locales[0], runnerRepository, 'Base', languageStrings);
 
-    locales.forEach(
-      (locale) => //
-          Directory("${runnerRepository.path}/$locale.lproj") //
-              .create(recursive: true)
-              .then((localeFolder) {
-        if (!_hasAllFiles(localeFolder)) {
-          File("${runnerRepository.path}/$completeLocale.lproj/LaunchScreen.storyboard") //
-              .copy("${localeFolder.path}/LaunchScreen.storyboard");
+    var completedLocale = _getCompleteLocaleIterable(locales, runnerRepository).first;
 
-          File("${runnerRepository.path}/$completeLocale.lproj/Main.storyboard") //
-              .copy("${localeFolder.path}/Main.storyboard");
-        }
-
-        File("${localeFolder.path}/Localizable.strings") //
-            .writeAsString(_generateIosStrings(
-                languageStrings.getLanguageStrings(locale)));
-      }),
-    );
+    locales.forEach((locale) => _copyFiles(locale, runnerRepository, completedLocale, languageStrings));
 
     incompleteLocales.forEach((incompleteLocale) {});
   }
 
+  Iterable<String> _getCompleteLocaleIterable(List<String> locales, Directory runnerRepository) => //
+      locales.where((element) {
+        var directory = Directory("${runnerRepository.path}/$element.lproj");
+        return directory.existsSync() ? _hasAllFiles(directory) : false;
+      });
+
+  void _copyFiles(String locale, Directory runnerRepository, String completeLocale, LanguageStringMap languageStrings) {
+    var localeFolder = Directory("${runnerRepository.path}/$locale.lproj");
+    localeFolder.createSync(recursive: true);
+    if (!_hasAllFiles(localeFolder)) {
+      File("${runnerRepository.path}/$completeLocale.lproj/LaunchScreen.storyboard") //
+          .copySync("${localeFolder.path}/LaunchScreen.storyboard");
+
+      File("${runnerRepository.path}/$completeLocale.lproj/Main.storyboard") //
+          .copySync("${localeFolder.path}/Main.storyboard");
+    }
+
+    File("${localeFolder.path}/Localizable.strings") //
+        .writeAsString(_generateIosStrings(languageStrings.getLanguageStrings(locale)));
+  }
+
   bool _hasAllFiles(Directory localeFolder) => //
-      localeFolder
-          .listSync()
-          .map((f) => f.path)
-          .where(_isBasicFile)
-          .toList()
-          .isNotEmpty;
+      localeFolder.listSync().map((f) => f.path).where(_isBasicFile).toList().isNotEmpty;
 
   bool _isBasicFile(String filePath) => //
-      filePath.contains("LaunchScreen.storyboard") ||
-      filePath.contains("Main.storyboard");
+      filePath.contains("LaunchScreen.storyboard") || filePath.contains("Main.storyboard");
 
   /// Creates locale file for Android
-  void _createLocaleFile(String resourceDirectoryPath,
-          List<LanguageString> languageStrings) => //
+  void _createLocaleFile(String resourceDirectoryPath, List<LanguageString> languageStrings) => //
       Directory(resourceDirectoryPath) //
           .create(recursive: true)
           .then((_) => //
@@ -164,8 +158,8 @@ class NativeFilesGenerator extends I18nGenerator {
     LanguageStringMap languageStrings = LanguageStringMap();
 
     languageFiles.forEach((languageFile) => //
-        languageStrings.addLanguageStrings(languageFile.locale,
-            json.decode(File(languageFile.file.path).readAsStringSync())));
+        languageStrings.addLanguageStrings(
+            languageFile.locale, json.decode(File(languageFile.file.path).readAsStringSync())));
 
     return languageStrings;
   }

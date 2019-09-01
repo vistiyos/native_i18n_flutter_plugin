@@ -7,11 +7,7 @@ class Translation {
   Translation(this.translationKey, {this.translationArguments});
 
   Map<String, dynamic> get toMap => //
-      {
-        'translationKey': translationKey,
-        'translationArguments': translationArguments
-      };
+      {'translationKey': translationKey, 'translationArguments': translationArguments};
 
-  String format(String translation) =>
-      sprintf(translation, translationArguments);
+  String format(String translation) => sprintf(translation, translationArguments ?? []);
 }

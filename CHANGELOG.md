@@ -25,3 +25,7 @@ Fix bug due to have not change all the occurrences for the native file generatio
 ## 0.1.6
 
 Fix bug in command line with projects that haven't been set up yet. 
+
+## 0.1.7
+
+Nested JSON keys are supported in language files.

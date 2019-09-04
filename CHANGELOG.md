@@ -29,3 +29,7 @@ Fix bug in command line with projects that haven't been set up yet.
 ## 0.1.7
 
 Nested JSON keys are supported in language files.
+
+## 0.1.8
+
+Code refactoring for native files generation.

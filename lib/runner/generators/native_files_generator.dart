@@ -159,7 +159,7 @@ class NativeFilesGenerator extends I18nGenerator {
 
     languageFiles.forEach((languageFile) => //
         languageStrings.addLanguageStrings(
-            languageFile.locale, json.decode(File(languageFile.file.path).readAsStringSync())));
+            languageFile.locale, languageFile.languageStrings));
 
     return languageStrings;
   }

@@ -1,7 +1,7 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:native_i18n_flutter_plugin/runner/generators/i18n_generator.dart';
+import 'package:native_i18n_flutter_plugin/runner/helpers/language_file.dart';
 import 'package:watcher/watcher.dart';
 
 /// Generate Dart class with the
@@ -17,7 +17,7 @@ class LanguageStringClassGenerator extends I18nGenerator {
     _generateClassFile();
 
     if (watch) {
-      FileWatcher(_getDefaultLanguageFile.absolute.path) //
+      FileWatcher(_getDefaultLanguageFile.file.absolute.path) //
           .events
           .listen((event) {
         if (event.type == ChangeType.MODIFY) _generateClassFile();
@@ -30,7 +30,8 @@ class LanguageStringClassGenerator extends I18nGenerator {
 
     out("Generating class file...");
 
-    _getLanguageStrings.forEach((key, value) => strings.addAll(_nestedKeys(key, value)));
+    _getDefaultLanguageFile.languageStrings
+        .forEach((languageString) => strings.add(_LanguageStringGetter(languageString.key, languageString.value)));
 
     final classTemplate = """
       /// DO NOT MODIFY, MANUALLY CHANGES WILL BE OVERWRITTEN
@@ -56,21 +57,8 @@ class LanguageStringClassGenerator extends I18nGenerator {
                 : print(result.stderr)));
   }
 
-  List<_LanguageStringGetter> _nestedKeys(String key, dynamic value) {
-    var languageGetters = <_LanguageStringGetter>[];
-    if (value is String) {
-      languageGetters.add(_LanguageStringGetter(key, value));
-    } else {
-      (value as Map)
-          .forEach((innerKey, innerValue) => languageGetters.addAll(_nestedKeys("${key}_$innerKey", innerValue)));
-    }
-
-    return languageGetters;
-  }
-
-  File get _getDefaultLanguageFile => File("${_inputDirectory.path}/strings_$_defaultLocale.json");
-
-  Map<String, dynamic> get _getLanguageStrings => jsonDecode(_getDefaultLanguageFile.readAsStringSync());
+  LanguageFile get _getDefaultLanguageFile =>
+      LanguageFile(_defaultLocale, File("${_inputDirectory.path}/strings_$_defaultLocale.json"));
 }
 
 /// Language String IDE Getter

@@ -54,6 +54,12 @@ this command is for, so just run the following command and enjoy the magic:
 
 `flutter pub run native_i18n_flutter_plugin generateClass -i <folder_for_flutter_language_files> -o <location_for_your_class> [--watch]`
 
+### Generate Dart class and Native files with only one command
+
+If you want to generate everything just with one command, here it is:
+
+`flutter pub run native_i18n_flutter_plugin generate -i <folder_for_flutter_language_files> -o <location_for_your_class> [--watch]`
+
 
 ## TODO
 

@@ -33,3 +33,7 @@ Nested JSON keys are supported in language files.
 ## 0.1.8
 
 Code refactoring for native files generation.
+
+## 0.1.9
+
+New CLI command available to generate both Native files and I18n Dart class.

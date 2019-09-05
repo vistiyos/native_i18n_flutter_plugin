@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:native_i18n_flutter_plugin/runner/generators/i18n_generator.dart';
 import 'package:native_i18n_flutter_plugin/runner/helpers/language_file.dart';
 import 'package:watcher/watcher.dart';
+import 'package:path/path.dart' as p;
 
 /// Generate Dart class with the
 class LanguageStringClassGenerator extends I18nGenerator {
@@ -16,14 +17,15 @@ class LanguageStringClassGenerator extends I18nGenerator {
   void generate(bool watch) {
     _generateClassFile();
 
-    if (watch) {
-      FileWatcher(_getDefaultLanguageFile.file.absolute.path) //
-          .events
-          .listen((event) {
+    if (watch) setUpFileWatcher();
+  }
+
+  void setUpFileWatcher() => //
+      fileWatcher.events.listen((event) {
         if (event.type == ChangeType.MODIFY) _generateClassFile();
       });
-    }
-  }
+
+  FileWatcher get fileWatcher => FileWatcher(_getDefaultLanguageFile.file.absolute.path);
 
   void _generateClassFile() {
     List<_LanguageStringGetter> strings = [];
@@ -49,7 +51,7 @@ class LanguageStringClassGenerator extends I18nGenerator {
       }
     """;
 
-    File("${_outputDirectory.path}/i18n.dart") //
+    File(p.join(_outputDirectory.path, 'i18n.dart')) //
         .writeAsString(classTemplate)
         .then((file) => Process.run('dartfmt', [file.absolute.path]) //
             .then((result) => result.exitCode == 0

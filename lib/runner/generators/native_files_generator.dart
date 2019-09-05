@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:native_i18n_flutter_plugin/runner/generators/i18n_generator.dart';
@@ -20,11 +19,11 @@ class NativeFilesGenerator extends I18nGenerator {
   void generate(bool watch) async {
     _generateNativeFiles();
 
-    if (watch) {
-      _getLanguageFiles
-          .then((files) => files.forEach((file) => FileWatcher(file.file.path).events.listen(_languageFileWatcher)));
-    }
+    if (watch) setUpFileWatcher();
   }
+
+  void setUpFileWatcher() => _getLanguageFiles
+      .then((files) => files.forEach((file) => FileWatcher(file.file.path).events.listen(_languageFileWatcher)));
 
   void _languageFileWatcher(WatchEvent event) {
     if (event.type == ChangeType.MODIFY) _generateNativeFiles();
@@ -158,8 +157,7 @@ class NativeFilesGenerator extends I18nGenerator {
     LanguageStringMap languageStrings = LanguageStringMap();
 
     languageFiles.forEach((languageFile) => //
-        languageStrings.addLanguageStrings(
-            languageFile.locale, languageFile.languageStrings));
+        languageStrings.addLanguageStrings(languageFile.locale, languageFile.languageStrings));
 
     return languageStrings;
   }

@@ -4,6 +4,7 @@ import 'package:native_i18n_flutter_plugin/runner/generators/i18n_generator.dart
 import 'package:native_i18n_flutter_plugin/runner/helpers/language_file.dart';
 import 'package:watcher/watcher.dart';
 import 'package:path/path.dart' as p;
+import 'package:process_run/cmd_run.dart';
 
 /// Generate Dart class with the
 class LanguageStringClassGenerator extends I18nGenerator {
@@ -53,7 +54,7 @@ class LanguageStringClassGenerator extends I18nGenerator {
 
     File(p.join(_outputDirectory.path, 'i18n.dart')) //
         .writeAsString(classTemplate)
-        .then((file) => Process.run('dartfmt', [file.absolute.path]) //
+        .then((file) => runCmd(DartFmtCmd([file.absolute.path])) //
             .then((result) => result.exitCode == 0
                 ? file.writeAsString(result.stdout).then((_) => out("Class file generated."))
                 : print(result.stderr)));

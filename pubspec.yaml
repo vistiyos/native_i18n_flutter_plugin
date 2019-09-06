@@ -1,6 +1,6 @@
 name: native_i18n_flutter_plugin
 description: Internationalization Flutter plugin based on Native APIs besides a command line tool to hep you during development phase
-version: 0.1.9
+version: 0.1.10
 author: Victor Escobar <victorescobargonza@gmail.com>
 homepage: https://github.com/vistiyos/native_i18n_flutter_plugin
 
@@ -12,6 +12,7 @@ dependencies:
   args: ^1.5.2
   xml: ^3.5.0
   sprintf: ^4.0.2
+  process_run: ^0.10.2
   watcher: ^0.9.7+12
   flutter:
     sdk: flutter

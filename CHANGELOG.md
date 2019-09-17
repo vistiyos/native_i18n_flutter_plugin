@@ -41,3 +41,7 @@ New CLI command available to generate both Native files and I18n Dart class.
 ## 0.1.10
 
 Fix bug running dartfmt on Windows.
+
+## 0.1.11
+
+Cache added to prevent doing so many calls.

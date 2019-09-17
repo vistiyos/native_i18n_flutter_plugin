@@ -10,4 +10,7 @@ class Translation {
       {'translationKey': translationKey, 'translationArguments': translationArguments};
 
   String format(String translation) => sprintf(translation, translationArguments ?? []);
+
+  @override
+  String toString() => "{ $translationKey -> $translationArguments }";
 }

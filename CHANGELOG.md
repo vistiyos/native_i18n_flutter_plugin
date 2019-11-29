@@ -24,7 +24,7 @@ Fix bug due to have not change all the occurrences for the native file generatio
 
 ## 0.1.6
 
-Fix bug in command line with projects that haven't been set up yet. 
+Fix bug in command line with projects that haven't been set up yet.
 
 ## 0.1.7
 
@@ -45,3 +45,7 @@ Fix bug running dartfmt on Windows.
 ## 0.1.11
 
 Cache added to prevent doing so many calls.
+
+## 0.1.12
+
+Checks whether a translation is returned as null

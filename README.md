@@ -66,4 +66,10 @@ If you want to generate everything just with one command, here it is:
 1. Generate class containing the language strings keys so can be used with IDE autocompletion. ✅
 2. Formatted strings. ✅
 3. Added watch flag so the command line will run whenever a file is change. ✅ 
-4. Strings pluralization.  
+4. Strings pluralization.
+
+## Known issues
+
+### App crashes as soon as tries to load a translation on Android
+
+There is a problem deserializing the data sent to the native language API due to `shrinkResources` feature, therefore, until a solution is found you need to disable when you generate a release.

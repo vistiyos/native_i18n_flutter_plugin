@@ -49,3 +49,7 @@ Cache added to prevent doing so many calls.
 ## 0.1.12
 
 Checks whether a translation is returned as null
+
+## 0.1.13
+
+Solving problem deserializing translations when build a release

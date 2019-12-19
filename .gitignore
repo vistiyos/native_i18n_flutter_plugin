@@ -5,3 +5,7 @@
 .pub/
 .idea
 build/
+
+example/.flutter-plugins-dependencies
+
+example/android/key.properties

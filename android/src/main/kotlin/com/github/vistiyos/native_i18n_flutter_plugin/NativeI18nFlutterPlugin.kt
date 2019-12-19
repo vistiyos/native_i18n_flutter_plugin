@@ -1,14 +1,17 @@
 package com.github.vistiyos.native_i18n_flutter_plugin
 
 import android.content.Context
-import com.fasterxml.jackson.module.kotlin.*
+import android.support.annotation.Keep
 import com.github.vistiyos.native_i18n_flutter_plugin.model.Translation
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry.Registrar
 
+@Keep
 class NativeI18nFlutterPlugin(private var context: Context) : MethodCallHandler {
     companion object {
         @JvmStatic
@@ -18,13 +21,12 @@ class NativeI18nFlutterPlugin(private var context: Context) : MethodCallHandler 
         }
     }
 
-    var objectMapper = jacksonObjectMapper()
-
     override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
             "getTranslations" -> {
                 val translationMap = mutableMapOf<String, String>()
-                val translations: List<Translation> = objectMapper.readValue(call.arguments() as String)
+                val sType = object : TypeToken<List<Translation>>() { }.type
+                val translations = Gson().fromJson<List<Translation>>(call.arguments() as String, sType)
                 translations
                         .map { Pair(getInternalStringIdentifier(it.translationKey), it) }
                         .map { Pair(it.second.translationKey, getString(it.first, it.second)) }

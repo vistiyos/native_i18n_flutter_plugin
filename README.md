@@ -70,6 +70,6 @@ If you want to generate everything just with one command, here it is:
 
 ## Known issues
 
-### App crashes as soon as tries to load a translation on Android
+### ~App crashes as soon as tries to load a translation on Android~
 
-There is a problem deserializing the data sent to the native language API due to `shrinkResources` feature, therefore, until a solution is found you need to disable when you generate a release.
+~There is a problem deserializing the data sent to the native language API due to `shrinkResources` feature, therefore, until a solution is found you need to disable when you generate a release.~
